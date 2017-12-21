@@ -33,10 +33,10 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = True
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -46,15 +46,15 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    'ArticleSpider.middlewares.ArticlespiderSpiderMiddleware': 543,
-#}
+# }
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'ArticleSpider.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'ArticleSpider.middlewares.RandomUserAgentMiddleWare': 543,
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -106,3 +106,12 @@ MYSQL_DBNAME = "article_spider"
 
 DATETIME_FORMATE = "%Y-%m-%d %H:%M:%S"
 DATE_FORMATE = "%Y-%m-%d"
+
+
+import sys
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+print(BASE_DIR)
+os.path.join(BASE_DIR,"ArticleSpider")
+
+RANDOM_UA_TYPE = "random"

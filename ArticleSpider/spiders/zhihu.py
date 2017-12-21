@@ -118,8 +118,8 @@ class ZhihuSpider(scrapy.Spider):
             post_url = "https://www.zhihu.com/login/phone_num"
             post_data = {
                 "_xsrf": xsrf,
-                "phone_num": "#",
-                "password": "#",
+                "phone_num": "17770030411",
+                "password": "19950319",
                 "captcha" : captcha
             }
 
@@ -151,8 +151,20 @@ class ZhihuSpider(scrapy.Spider):
             for url in self.start_urls:
                 yield scrapy.Request(url=url,dont_filter=True,meta={"cookiejar":response.meta['cookiejar']},headers=self.headers,callback=self.parse)
         else:
-            pass
-
+            if "msg" in text_json:
+                print(text_json["msg"]+"\n")
+                print("重新登录中")
+                t = str(int(time.time() * 1000))
+                captcha_url = 'http://www.zhihu.com/captcha.gif?r=' + t + "&type=login"
+                yield scrapy.Request(url=captcha_url, dont_filter=True, headers=self.headers, meta={"cookiejar": 1},
+                                     callback=self.request_captcha)
+            else:
+                print("未知错误""\n")
+                print("重新登录中")
+                t = str(int(time.time() * 1000))
+                captcha_url = 'http://www.zhihu.com/captcha.gif?r=' + t + "&type=login"
+                yield scrapy.Request(url=captcha_url, dont_filter=True, headers=self.headers, meta={"cookiejar": 1},
+                                     callback=self.request_captcha)
 
 
 
